@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../src/jvplus.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <style>
+        a {
+            font-size: 48px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <a href="#" onclick="pay()">支付</a>
+        <a href="#" onclick="scanCode()">扫码</a>
+        <a href="#" onclick="authorize()">授权</a>
+    </div>
+
+    <script>
+
+        var vConsole = new window.VConsole();
+
+        function init(){
+            vplus.config({
+                appId: "skdfjksdf"
+            })
+        }
+        init();
+
+        function pay(){
+            vplus.pay({
+                money: "18393",
+                order_no: "vb4379271866454543554569897",
+                success: (res) => {
+                    console.log(res);
+                }
+            });
+        }
+
+        function authorize(){
+            vplus.authorize({
+                app_key: "FBQV7CGQXI446CROVDC2IQYBIAI65S0L",
+                success: (res) => {
+                    console.log("success");
+                    console.log(res);
+                    this.code = res.data;
+                },
+            })
+        }
+
+        function scanCode(){
+            vplus.scanQrCode({
+                needResult: true,
+                success(res){
+                    this.scanCode = res.data;
+                    console.log("扫码结果")
+                    console.log(res.data);
+                    console.log(res);
+                }
+            })
+        }
+
+    </script>
+
+</body>
+</html>
